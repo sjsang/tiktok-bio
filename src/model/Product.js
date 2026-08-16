@@ -12,6 +12,10 @@ const productSchema = new mongoose.Schema({
     affiliateUrl: {
         type: String,
         required: true,
+    },
+    affiliateCode: {
+        type: String,
+        required: true,
     }
 });
 
