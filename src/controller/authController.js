@@ -2,30 +2,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../model/User');
 
-const register = async (req, res) => {
-    try {
-        const { username, password, confirmPassword } = req.body;
-
-        if (!username || !password || !confirmPassword) {
-            return res.status(400).json({ message: 'Vui lòng nhập đầy đủ thông tin' });
-        }
-
-        const existingUser = await User.findOne({ username });
-        if (existingUser) {
-            return res.status(400).json({ message: 'Tên đăng nhập đã tồn tại' });
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const newUser = new User({ username, password: hashedPassword });
-        await newUser.save();
-
-        res.status(201).json({ message: 'Đăng ký thành công' });
-    } catch (error) {
-        res.status(500).json({ message: 'Lỗi máy chủ' });
-    }
-};
-
 const login = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -66,7 +42,6 @@ const getUserInfo = async (req, res) => {
 };
 
 module.exports = {
-    register,
     login,
     getUserInfo
 };
